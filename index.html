@@ -66,8 +66,19 @@
         <input type="text" id="link-text" readonly><br>
         <button onclick="copyLink()">Copy Link</button>
     </div>
+    <div id="answer" style="display:none;">
+        <h2>Answer:</h2>
+        <p id="answer-text"></p>
+    </div>
 </div>
 <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const answer = urlParams.get('answer');
+    if (answer) {
+        document.getElementById('answer-text').textContent = decodeURIComponent(answer);
+        document.getElementById('answer').style.display = 'block';
+    }
+
     function showQuestionForm() {
         document.getElementById('question-form').style.display = 'block';
         document.getElementById('create-question-btn').style.display = 'none';
