@@ -31,7 +31,7 @@
         color: #777;
     }
     textarea {
-        width: 100%;
+        width: 93%;
         padding: 10px;
         border-radius: 5px;
         border: 1px solid #ccc;
@@ -51,13 +51,14 @@
 </style>
 </head>
 <body>
-<div class="container">
-    <h1>Answer the Question</h1>
-    <p id="question"></p>
-    <label for="answer">Your Answer:</label><br>
-    <textarea id="answer" rows="4" placeholder="Enter your answer here..."></textarea><br>
-    <button onclick="submitAnswer()">Submit Answer</button>
-</div>
+<h1>Answer the Question</h1>
+
+<p id="question"></p>
+
+<label for="answer">Your Answer:</label><br>
+<textarea id="answer" rows="4" cols="50"></textarea><br>
+<button onclick="submitAnswer()">Submit Answer</button>
+
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const questionParam = urlParams.get('question');
