@@ -16,7 +16,7 @@
         background-color: #f8f9fa;
     }
     .container {
-        max-width: 800px;
+        max-width: 500px;
         padding: 40px;
         background-color: #fff;
         border-radius: 10px;
@@ -31,8 +31,21 @@
         margin-bottom: 20px;
         color: #777;
     }
+    label {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
     textarea {
-        width: 94%;
+        width: 100%;
         padding: 10px;
         border-radius: 5px;
         border: 1px solid #ccc;
@@ -54,9 +67,11 @@
 <body>
 <div class="container">
     <h1>Answer the Question</h1>
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" placeholder="Enter your name..." required><br>
     <p id="question"></p>
     <label for="answer">Your Answer:</label><br>
-    <textarea id="answer" rows="4" placeholder="Enter your answer here..."></textarea><br>
+    <textarea id="answer" rows="4" placeholder="Enter your answer here..." required></textarea><br>
     <button onclick="submitAnswer()">Submit Answer</button>
 </div>
 <script>
@@ -65,9 +80,10 @@
     document.getElementById('question').textContent = decodeURIComponent(questionParam);
 
     function submitAnswer() {
+        const name = document.getElementById('name').value;
         const answer = document.getElementById('answer').value;
-        // Here you can process the answer, e.g., save it to a database, display it, etc.
-        alert('Answer submitted!');
+        // Here you can process the name and answer, e.g., save them to a database, display them, etc.
+        alert(`Thank you, ${name}! Your answer has been submitted.`);
     }
 </script>
 </body>
