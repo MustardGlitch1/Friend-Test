@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Answer the Question</title>
+<title>Friend Test</title>
 <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,7 +16,7 @@
         background-color: #f8f9fa;
     }
     .container {
-        max-width: 500px;
+        max-width: 800px;
         padding: 40px;
         background-color: #fff;
         border-radius: 10px;
@@ -31,26 +31,6 @@
         margin-bottom: 20px;
         color: #777;
     }
-    label {
-        display: block;
-        margin-bottom: 10px;
-        color: #333;
-    }
-    input {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        margin-bottom: 20px;
-        box-sizing: border-box;
-    }
-    textarea {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        resize: vertical;
-    }
     button {
         padding: 10px 20px;
         background-color: #007bff;
@@ -62,28 +42,81 @@
     button:hover {
         background-color: #0056b3;
     }
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        resize: vertical;
+    }
+    .answer {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .link {
+        margin-top: 20px;
+        text-align: center;
+    }
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>Answer the Question</h1>
-    <label for="name">Your Name:</label>
-    <input type="text" id="name" placeholder="Enter your name..." required><br>
-    <p id="question"></p>
-    <label for="answer">Your Answer:</label><br>
-    <textarea id="answer" rows="4" placeholder="Enter your answer here..." required></textarea><br>
-    <button onclick="submitAnswer()">Submit Answer</button>
+    <h1>Friend Test</h1>
+    <p>Welcome to the Friend Test! Create a question below and share the link with your friend to see how well they know you.</p>
+    <button id="create-question-btn" onclick="showQuestionForm()">Create a Question</button>
+    <div id="question-form" style="display:none;">
+        <label for="question">Your Question:</label><br>
+        <textarea id="question" rows="4" placeholder="Enter your question here..."></textarea><br>
+        <button onclick="generateLink()">Generate Link</button>
+    </div>
+    <div id="link" style="display:none;">
+        <p>Share this link with your friend:</p>
+        <input type="text" id="link-text" readonly><br>
+        <button onclick="copyLink()">Copy Link</button>
+    </div>
+    <div id="answers" style="display:none;">
+        <h2>Answers:</h2>
+    </div>
+    <div id="visit-link" class="link" style="display:none;">
+        <p>Visit the website again:</p>
+        <a href="/">Friend Test</a>
+    </div>
 </div>
 <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const questionParam = urlParams.get('question');
-    document.getElementById('question').textContent = decodeURIComponent(questionParam);
+    const answer = urlParams.get('answer');
+    if (answer) {
+        const name = urlParams.get('name');
+        const answerElement = document.createElement('div');
+        answerElement.classList.add('answer');
+        answerElement.textContent = `${name}: ${decodeURIComponent(answer)}`;
+        document.getElementById('answers').appendChild(answerElement);
+        document.getElementById('answers').style.display = 'block';
+        document.getElementById('visit-link').style.display = 'block';
+    }
 
-    function submitAnswer() {
-        const name = document.getElementById('name').value;
-        const answer = document.getElementById('answer').value;
-        // Here you can process the name and answer, e.g., save them to a database, display them, etc.
-        alert(`Thank you, ${name}! Your answer has been submitted.`);
+    function showQuestionForm() {
+        document.getElementById('question-form').style.display = 'block';
+        document.getElementById('create-question-btn').style.display = 'none';
+    }
+
+    function generateLink() {
+        const question = document.getElementById('question').value;
+        const encodedQuestion = encodeURIComponent(question);
+        const url = `${window.location.href.split('?')[0]}answer.html?question=${encodedQuestion}`;
+        document.getElementById('link-text').value = url;
+        document.getElementById('link').style.display = 'block';
+        document.getElementById('visit-link').style.display = 'block';
+    }
+
+    function copyLink() {
+        const linkText = document.getElementById('link-text');
+        linkText.select();
+        document.execCommand('copy');
+        alert('Link copied to clipboard!');
     }
 </script>
 </body>
